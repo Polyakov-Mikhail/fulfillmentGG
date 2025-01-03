@@ -1,0 +1,52 @@
+{% load static %}
+
+<header data-bs-theme="dark">
+    {% include 'ful/includes/inc_menu.html' %}
+</header>
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Через эту прокладку можно перейти на нужную домашнюю работу Полякова Михаила</title>
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" >
+</head>
+<body>
+
+
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">Домашние работы Полякова Михаила</h1>
+    <p class="lead">Через этот сайт можно быстро перейти на нужную домашнюю работу</p>
+    <p class="lead">В сплывающем меню выберите нужную ссылку</p>
+    <a class="p-2 btn btn-outline-primary" href="#">Продукты (Все домашки)</a>
+    <a class="p-2 btn btn-outline-primary" href="#">Блоги (Домашка 21.1)</a>
+</div>
+
+<div class="container">
+
+    <footer class="pt-4 my-md-5 pt-md-5 border-top">
+        <div class="row">
+            <div class="col-12 col-md">
+                Skypro
+                <small class="d-block mb-3 text-muted">&copy; 2024</small>
+            </div>
+            <div class="col-6 col-md">
+                <h5>Дополнительно</h5>
+                <ul class="list-unstyled text-small">
+                    <li><a class="text-muted" href="https://media.istockphoto.com/id/497801217/ru/%D0%B2%D0%B5%D0%BA%D1%82%D0%BE%D1%80%D0%BD%D0%B0%D1%8F/oui-%D0%B8%D0%BB%D0%B8-%D1%84%D0%BB%D0%B0%D0%B6%D0%BA%D0%BE%D0%B2-%D0%BD%D0%B0-%D0%BA%D0%BB%D0%B0%D1%81%D1%81%D0%BD%D0%B0%D1%8F-%D0%B4%D0%BE%D1%81%D0%BA%D0%B0-%D0%B4%D0%BE%D1%81%D0%BA%D0%B0-%D0%B4%D0%BB%D1%8F-%D0%BF%D0%B8%D1%81%D1%8C%D0%BC%D0%B0.jpg?s=612x612&w=0&k=20&c=Lq24EmoPDfHwGgxgtVRi4IaDOGE9Ww6ledpvKenXn5g=">Дополнительная литература</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-md">
+                <h5>Еще полезная ссылка</h5>
+                <ul class="list-unstyled text-small">
+                    <li><a class="text-muted" href="#">Будет тут в будущем</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+</div>
+
+<script src="{% static 'js/bootstrap.bundle.min.js' %}" ></script>
+</body>
+</html>
