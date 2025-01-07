@@ -1,0 +1,54 @@
+{% extends 'ful/base.html' %}
+{% load static %}
+
+{% block content %}
+
+
+<div class="container overflow-hidden" style="padding-top:200px;">
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col"></th>
+            <th scope="col">Услуга</th>
+            <th scope="col">Единица измерения</th>
+            <th scope="col">Цена, руб. (от)</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for services in object_list %}
+        <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>{{ services.title }}</td>
+            <td>{{ services.measurement }}</td>
+            <td>{{ services.price }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+<div id="rec809369897" class="r t-rec t-rec_pt_0" style="padding-top:100px; " data-animationappear="off"
+     data-record-type="213"> <!-- cover -->
+    <div class="t-cover" id="recorddiv809369897" bgimgfield="img">
+        <div class="t-cover__carrier" id="coverCarry809369897" data-content-cover-id="809369897"
+             data-content-cover-bg="{% static 'image/uslugi.jpeg' %}"
+             data-display-changed="true" data-content-cover-height="500px" data-content-cover-parallax=""
+             data-content-use-image-for-mobile-cover="" style="height:680px;background-attachment:scroll; ">
+            <meta itemprop="image"
+                  content="{% static 'image/uslugi.jpeg' %}">
+        </div>
+    </div>
+</div>
+
+<div id="rec735762121" class="r t-rec t-rec_pt_0 t-rec_pb_0"
+     style="padding-top:100px;padding-bottom:0px;background-color:#eeeeee; " data-record-type="126"
+     data-bg-color="#eeeeee"> <!-- T118 -->
+    <div class="t118">
+        <div class="t-container">
+            <div class="t-col t-col_12 ">
+                <hr class="t-divider t118__line" style="background-color:#000000;opacity:0.2;">
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
