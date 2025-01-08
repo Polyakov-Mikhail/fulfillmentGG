@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
 from django.views.generic import ListView, DetailView, CreateView
-from ful.models import Start, FAQ, Services, CategoryFAQ, Warehouses
+from ful.models import Start, FAQ, Services, CategoryFAQ, Warehouses, Employees
 
 
 def index(request):
@@ -31,7 +31,6 @@ class ServicesListView(ListView):
 
 class WarehousesListView(ListView):
     model = Warehouses
-
 
 
 class WarehousesDetailView(DetailView):
