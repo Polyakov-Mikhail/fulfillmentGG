@@ -30,4 +30,4 @@ class JobTitleAdmin(admin.ModelAdmin):
 
 @admin.register(Employees)
 class EmployeesAdmin(admin.ModelAdmin):
-    list_display = ('last_name', 'first_name', 'job_title', 'warehouse', 'photo',)
+    list_display = ('id', 'last_name', 'first_name', 'job_title', 'warehouse', 'photo',)

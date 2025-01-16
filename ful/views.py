@@ -40,3 +40,12 @@ class WarehousesDetailView(DetailView):
         warehouses = Warehouses.objects.all()
         context = {'warehouses': warehouses}
         return render(request, 'warehouses_detail.html', context)
+
+
+class EmployeesListView(ListView):
+    model = Employees
+
+    def employees_view(request):
+        warehouses = Warehouses.objects.all()
+        context = {'warehouses': warehouses}
+        return render(request, 'employees_list.html', context)

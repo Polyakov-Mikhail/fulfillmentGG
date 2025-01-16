@@ -5,7 +5,7 @@
       type="text/css" media="all" onerror="this.loaderr='y';"/>
 <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
 
-<div id="rec834843162" class="r t-rec t-rec_pt_15" style="padding-top:15px; " data-record-type="967">
+<div>
     <div id="nav834843162"
          class="t967 t967__positionfixed tmenu-mobile__menucontent_hidden tmenu-mobile__menucontent_fixed"
          style="background-color: rgba(255,255,255,1); " data-bgcolor-hex="#000000"
@@ -82,7 +82,7 @@
                         Выйти
                     </a>
                     </div>
-                    <div class="t967__button-wrap"><a href="#"
+                    <div class="t967__button-wrap"><a href="{% url 'cabinet:home' %}"
                                                       class="t967__button t-btn t-btn_md "
                                                       style="border:2px solid #000000;"
                                                       data-buttonfieldset="button2">
@@ -137,9 +137,15 @@
                             </a></li>
                             <li class="t967__list-item"
                                 style="padding:0 15px;"><a class="t-menu__link-item"
-                                                           href="#"
+                                                           href="{% url 'ful:employees' %}"
                                                            data-menu-submenu-hook="" data-menu-item-number="5">
                                 Наша команда
+                            </a></li>
+                            <li class="t967__list-item"
+                                style="padding:0 15px;"><a class="t-menu__link-item"
+                                                           href="{% url 'ful:faq' %}" data-menu-submenu-hook=""
+                                                           data-menu-item-number="8">
+                                FAQ
                             </a></li>
                             <li class="t967__list-item"
                                 style="padding:0 15px;"><a class="t-menu__link-item"
@@ -152,12 +158,6 @@
                                                            href="#" data-menu-submenu-hook=""
                                                            data-menu-item-number="7">
                                 Отзывы
-                            </a></li>
-                            <li class="t967__list-item"
-                                style="padding:0 15px;"><a class="t-menu__link-item"
-                                                           href="{% url 'ful:faq' %}" data-menu-submenu-hook=""
-                                                           data-menu-item-number="8">
-                                FAQ
                             </a></li>
                         </ul>
                     </nav>

@@ -1,0 +1,63 @@
+{% extends 'ful/base.html' %}
+{% load static %}
+{% load my_tags %}
+
+{% block content %}
+
+
+<link rel="stylesheet" href="https://static.tildacdn.com/css/tilda-grid-3.0.min.css" type="text/css" media="all"
+      onerror="this.loaderr='y';"/>
+<link rel="stylesheet"
+      href="{% static 'css/blocks-page47341945.min.css' %}"
+      type="text/css" media="all" onerror="this.loaderr='y';"/>
+<script src="https://static.tildacdn.com/ws/project9249569/tilda-blocks-page47341945.min.js?t=1735802975"
+        charset="utf-8" async onerror="this.loaderr='y';"></script>
+
+
+
+<div id="rec735737182" class="r t-rec t-rec_pt_45 t-rec_pb_15"
+     style="padding-top:200px;padding-bottom:15px;background-color:#eeeeee; " data-record-type="509"
+     data-bg-color="#eeeeee"> <!-- t509 -->
+    {% for employee in object_list %}
+    <div class="t509">
+        <div class="t-card__container t-container">
+            <p class="aligncenter">
+                <img src="{{ employee.photo | media_filter}}" alt="mdo" width="500px">
+            </p>
+            <style>.aligncenter {text-align: center;}</style>
+            <div class="t509__colwrapper t-col t-col_10 t-prefix_1" style="padding-top:50px;">
+                <div class="t509__box">
+                    <div class="t-section__title t-title t-title_xs t-align_center t-margin_auto">
+                        <h1 style="color: rgb(0, 0, 0); "
+                           role="button">{{ employee.first_name }} {{ employee.last_name }}</h1>
+                    </div>
+                    {% if employee.job_title %}
+                    <div class="t-section__title t-title_xs t-align_center">
+                        <h3 style="color: rgb(255, 140, 90); "
+                           role="button">{{ employee.job_title }}</h3>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div id="rec735762124" class="r t-rec t-rec_pt_0 t-rec_pb_0"
+             style="padding-top:0px;padding-bottom:0px;background-color:#eeeeee; " data-record-type="126"
+             data-bg-color="#eeeeee"> <!-- T118 -->
+            <div class="t118">
+                <div class="t-container">
+                    <div class="t-col t-col_12 ">
+                        <hr class="t-divider t118__line" style="background-color:#000000;opacity:0.2;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    <script>
+        t_onReady(function() {t_onFuncLoad('t509_setHeight',function() {window.addEventListener('resize',t_throttle(function() {t509_setHeight('735737182');}));t509_setHeight('735737182');var rec=document.querySelector('#rec735737182');if(!rec) return;var wrapper=rec.querySelector('.t509');if(wrapper) {wrapper.addEventListener('displayChanged',function() {t509_setHeight('735737182');});}});});
+    </script>
+</div>
+
+
+
+{% endblock %}
