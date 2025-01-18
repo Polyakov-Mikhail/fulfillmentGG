@@ -25,20 +25,15 @@
             </thead>
             <tbody>
             <tr>
-                <td>{{ forloop.counter }}</td>
-                <td>{{ product_count }}</td>
-                <td>{{ product_total_quantity }}</td>
+                <td></td>
+                <td><a href="{% url 'cabinet:product' %}">{{ product_count }}</a></td>
+                <td><a href="{% url 'cabinet:product' %}">{{ product_total_quantity }}</a></td>
                 <td>0</td>
                 <td>0</td>
             </tr>
             </tbody>
         </table>
     </div>
-    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Dashboard</h1>
-    </div>
-
-    <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
 
 
 </main>

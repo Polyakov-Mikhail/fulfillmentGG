@@ -1,5 +1,5 @@
 from django.contrib import admin
-from cabinet.models import Product, Dashboard, Supply
+from cabinet.models import Product, Dashboard, Supply, ProductAccept
 
 
 @admin.register(Product)
@@ -14,4 +14,9 @@ class DashboardAdmin(admin.ModelAdmin):
 
 @admin.register(Supply)
 class SupplyAdmin(admin.ModelAdmin):
+    exclude = ('id', )
+
+
+@admin.register(ProductAccept)
+class ProductAcceptAdmin(admin.ModelAdmin):
     exclude = ('id', )

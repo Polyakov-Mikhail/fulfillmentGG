@@ -1,5 +1,5 @@
 from django.db import models
-from parso.python.tree import Class
+from datetime import datetime
 
 from users.models import User
 
@@ -87,14 +87,6 @@ class Dashboard(models.Model):
         **NULLABLE,
         on_delete=models.SET_NULL
     )
-    product = models.ForeignKey(
-        Product,
-        verbose_name="товар",
-        help_text="товар личного кабинета",
-        **NULLABLE,
-        on_delete=models.SET_NULL,
-        related_name="product",
-    )
 
     class Meta:
         verbose_name = "Владелец кабинета"
@@ -106,9 +98,10 @@ class Dashboard(models.Model):
 
 class Supply(models.Model):
     class StatusSupply(models.TextChoices):
-        CREATED = 'CD', 'Создана'
-        ACCEPTANCE = 'AE', 'Приемка'
-        ACCEPTED = 'FD', 'Принята'
+        CREATED = 'Создана', 'Создана'
+        WAY = 'В пути', 'В пути'
+        ACCEPTANCE = 'Приемка', 'Приемка'
+        ACCEPTED = 'Принята', 'Принята'
 
     delivery_date = models.DateField(
         verbose_name="Дата поступления товара",
@@ -117,23 +110,17 @@ class Supply(models.Model):
     owner = models.ForeignKey(
         User,
         verbose_name="Владелец",
-        help_text="Укажите владельца личного кабинета",
+        help_text="Укажите владельца поставки",
         **NULLABLE,
         on_delete=models.SET_NULL
     )
-    product = models.ManyToManyField(
-        Product,
-        verbose_name="товар",
-        help_text="товар личного кабинета",
-        **NULLABLE,
-        related_name="product_supply",
-    )
-    quantity = models.PositiveIntegerField(
-        verbose_name="количество товара",
-        help_text="Укажите количество товара, который приедет",
+    quantity_cargo = models.PositiveIntegerField(
+        verbose_name="количество грузовых мест",
+        help_text="Укажите количество грузовых мест в поставке",
+        default=0,
     )
     status = models.CharField(
-        max_length=2,
+        max_length=10,
         verbose_name="Статус перевозки",
         choices=StatusSupply.choices,
         default = StatusSupply.CREATED
@@ -144,4 +131,41 @@ class Supply(models.Model):
         verbose_name_plural = "Поставки"
 
     def __str__(self):
-        return self.delivery_date
+        return f'{self.status} от {self.delivery_date.strftime('%Y-%m-%d')}. Владелец {self.owner}'
+
+
+class ProductAccept(models.Model):
+    owner = models.ForeignKey(
+        User,
+        **NULLABLE,
+        verbose_name="Владелец",
+        help_text="Укажите владельца товара",
+        on_delete=models.SET_NULL
+    )
+    product = models.ForeignKey(
+        Product,
+        **NULLABLE,
+        verbose_name="товар",
+        help_text="Добавьте товар",
+        related_name="product_supply",
+        on_delete=models.SET_NULL
+    )
+    quantity = models.PositiveIntegerField(
+        verbose_name="количество товара",
+        help_text="Укажите количество товара, который приедет",
+    )
+    supply = models.ForeignKey(
+        Supply,
+        **NULLABLE,
+        verbose_name="Поставка",
+        help_text="Укажите в какой поставке приедет",
+        on_delete=models.SET_NULL,
+        related_name="supply",
+    )
+
+    class Meta:
+        verbose_name = "Поступление товаров"
+        verbose_name_plural = "Поставления товаров"
+
+    def __str__(self):
+        return f'{self.product} владелец {self.owner}'

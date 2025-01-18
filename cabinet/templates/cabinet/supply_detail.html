@@ -1,0 +1,47 @@
+{% extends 'cabinet/base.html' %}
+{% block content %}
+% load my_tags %}
+
+<main class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+    <style>
+        .center_big {
+  text-align: center;
+      font-family: 'Times New Roman', Times, serif;
+    font-size: 400%;
+}
+    </style>
+    <p class="center_big">Состав поставки от {{object.delivery_date}}</p>
+    <div class="table-responsive">
+        <a href="{% url 'cabinet:product_create' %}" class="btn btn-primary my-2">Добавить товар в поставку</a>
+        <table class="table table-striped table-sm">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Изображение</th>
+                <th>Название</th>
+                <th>Артикул</th>
+                <th>Штрихкод</th>
+                <th>Остаток</th>
+                <th>Редактировать</th>
+                <th>Удалить</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for product in supplys.product_supply.all %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>2</td>
+                <td>3</td>
+                <td>4</td>
+                <td>5</td>
+                <td>6</td>
+                <td>7</td>
+                <td>8</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</main>
+
+{% endblock %}

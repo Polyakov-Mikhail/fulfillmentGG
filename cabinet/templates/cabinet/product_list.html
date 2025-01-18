@@ -41,8 +41,12 @@
                 <td>{{ product.quantity }}</td>
                 <td><a class="btn btn-info" href="{% url 'cabinet:product_update' product.pk %}"
                                    role="button">Редактировать</a></td>
+                {% if product.quantity %}
+                <td>Удалить нельзя, есть остатки</td>
+                {% else %}
                 <td><a class="btn btn-danger" href="{% url 'cabinet:product_delete' product.pk %}"
                                    role="button">Удалить</a></td>
+                {% endif %}
                 {% endif %}
             </tr>
             {% endfor %}
