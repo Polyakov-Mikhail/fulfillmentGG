@@ -165,7 +165,144 @@ class ProductAccept(models.Model):
 
     class Meta:
         verbose_name = "Поступление товаров"
-        verbose_name_plural = "Поставления товаров"
+        verbose_name_plural = "Поступления товаров"
+
+    def __str__(self):
+        return f'{self.product} владелец {self.owner}'
+
+
+class Marketplace(models.Model):
+    name = models.CharField(
+        max_length=100,
+        verbose_name="Название маркетплейса",
+        help_text="Введите название макретплейса",
+    )
+
+    class Meta:
+        verbose_name = "Маркетплейс"
+        verbose_name_plural = "Маркетплейсы"
+
+    def __str__(self):
+        return self.name
+
+
+class DeliveryPoint(models.Model):
+    name = models.CharField(
+        max_length=100,
+        verbose_name="Название точки доставки",
+        help_text="Введите название точки доставки",
+    )
+    city = models.CharField(
+        max_length=30,
+        verbose_name="Город нахождения точки доставки",
+        help_text="Укажите город доставки",
+    )
+    address = models.CharField(
+        max_length=100,
+        verbose_name="Адрес точки доставки",
+        help_text="Укажите адрес доставки",
+    )
+    marketplace = models.ForeignKey(
+        Marketplace,
+        verbose_name="Маркетплейс",
+        help_text="Укажите маркетплейс",
+        on_delete=models.CASCADE,
+        related_name="marketplace",
+    )
+    is_active = models.BooleanField(
+        default=True,
+        verbose_name='Активный',
+    )
+
+    class Meta:
+        verbose_name = "Адрес доставки"
+        verbose_name_plural = "Адреса доставки"
+
+    def __str__(self):
+        return self.name
+
+
+class Shipment(models.Model):
+    class StatusShipment(models.TextChoices):
+        CREATED = 'Создана', 'Создана'
+        WAY = 'Отправлена', 'Отправлена'
+        DELIVERED = 'Доставлена', 'Доставлена'
+
+    shipment_date = models.DateField(
+        verbose_name="Дата отгрузки товара",
+        help_text="Укажите дату отгрузки товар",
+    )
+    owner = models.ForeignKey(
+        User,
+        verbose_name="Владелец",
+        help_text="Укажите владельца поставки",
+        **NULLABLE,
+        on_delete=models.SET_NULL
+    )
+    delivery_point = models.ForeignKey(
+        DeliveryPoint,
+        on_delete=models.PROTECT,
+        verbose_name="Точка доставки",
+        help_text="Укажите куда доставить товар",
+        related_name="delivery_point",
+    )
+    quantity_cargo = models.PositiveIntegerField(
+        verbose_name="количество грузовых мест",
+        help_text="Укажите количество грузовых мест в поставке",
+        default=0,
+    )
+    status = models.CharField(
+        max_length=10,
+        verbose_name="Статус отгрузки",
+        choices=StatusShipment.choices,
+        default = StatusShipment.CREATED
+    )
+    comment = models.TextField(
+        verbose_name="Комментарий",
+        help_text="Укажите комментарий, либо адрес доставки, если нет в списке",
+        **NULLABLE,
+    )
+
+    class Meta:
+        verbose_name = "Отгрузка"
+        verbose_name_plural = "Отгрузки"
+
+    def __str__(self):
+        return f'Поставка в {self.delivery_point} {self.status} от {self.shipment_date.strftime('%Y-%m-%d')}. Владелец {self.owner}'
+
+
+class ProductShipment(models.Model):
+    owner = models.ForeignKey(
+        User,
+        **NULLABLE,
+        verbose_name="Владелец",
+        help_text="Укажите владельца товара",
+        on_delete=models.SET_NULL
+    )
+    product = models.ForeignKey(
+        Product,
+        **NULLABLE,
+        verbose_name="товар",
+        help_text="Добавьте товар",
+        related_name="product_shipment",
+        on_delete=models.SET_NULL
+    )
+    quantity = models.PositiveIntegerField(
+        verbose_name="количество товара",
+        help_text="Укажите количество товара, который приедет",
+    )
+    shipment = models.ForeignKey(
+        Shipment,
+        **NULLABLE,
+        verbose_name="Отгрузка",
+        help_text="Укажите в какой отгрузке уедет",
+        on_delete=models.SET_NULL,
+        related_name="shipment",
+    )
+
+    class Meta:
+        verbose_name = "Отгрузка товара"
+        verbose_name_plural = "Отгрузки товаров"
 
     def __str__(self):
         return f'{self.product} владелец {self.owner}'
