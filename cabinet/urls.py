@@ -2,7 +2,8 @@ from django.urls import path
 
 from cabinet.apps import CabinetConfig
 from cabinet.views import ProductListView, ProductCreateView, ProductDeleteView, ProductUpdateView, DashboardListView, \
-    SupplyListView, SupplyCreateView, SupplyUpdateView, SupplyDetailView
+    SupplyListView, SupplyCreateView, SupplyUpdateView, SupplyDetailView, ProductAcceptCreateView, \
+    ProductAcceptUpdateView
 
 app_name = CabinetConfig.name
 
@@ -17,5 +18,8 @@ urlpatterns = [
     path('supply/<int:pk>/', SupplyDetailView.as_view(), name='supply_detail'),
     path('supply/create/', SupplyCreateView.as_view(), name='supply_create'),
     path('supply/update/<int:pk>/', SupplyUpdateView.as_view(), name='supply_update'),
+
+    path('product_accept/create/', ProductAcceptCreateView.as_view(), name='product_accept_create'),
+    path('product_accept/<int:pk>/', ProductAcceptUpdateView.as_view(), name='product_accept_detail'),
 
 ]

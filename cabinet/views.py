@@ -1,13 +1,26 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models.signals import post_save
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView
 from django.db.models import Sum
+from django.dispatch import receiver
 
-from cabinet.forms import ProductForm, SupplyForm
+from cabinet.forms import ProductForm, SupplyForm, ProductAcceptForm
 from cabinet.models import Product, Dashboard, Supply, ProductAccept
 from users.models import User
 
+
+class DashboardListView(ListView):
+    model = Dashboard
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        current_user = self.request.user
+        context['product_count'] = Product.objects.filter(is_active=True,owner=current_user).count()
+        context['product_total_quantity'] = Product.objects.filter(is_active=True, owner=current_user).aggregate(Sum('quantity'))['quantity__sum']
+        context['supply_total_quantity'] = Supply.objects.filter(owner=current_user,).count()
+        return context
 
 
 class ProductListView(ListView):
@@ -20,6 +33,16 @@ class ProductListView(ListView):
             return Product.objects.filter(owner=self.request.user)
         # Возвращаем пустой queryset для неаутентифицированных пользователей
         return Product.objects.none()
+
+    @receiver(post_save, sender=Supply)
+    def update_product_quantity(sender, instance, **kwargs):
+        if instance.status == Supply.StatusSupply.ACCEPTED:
+            product_accepts = ProductAccept.objects.filter(supply=instance)
+            for product_accept in product_accepts:
+                product = product_accept.product
+                if product:
+                    product.quantity += product_accept.quantity
+                    product.save()
 
 
 class ProductCreateView(CreateView, LoginRequiredMixin):
@@ -47,18 +70,6 @@ class ProductUpdateView(UpdateView):
     success_url = reverse_lazy('cabinet:product')
 
 
-
-class DashboardListView(ListView):
-    model = Dashboard
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        current_user = self.request.user
-        context['product_count'] = Product.objects.filter(is_active=True,owner=current_user).count()
-        context['product_total_quantity'] = Product.objects.filter(is_active=True,owner=current_user).aggregate(Sum('quantity'))['quantity__sum']
-        return context
-
-
 class SupplyListView(ListView):
     model = Supply
 
@@ -69,6 +80,12 @@ class SupplyListView(ListView):
             return Supply.objects.filter(owner=self.request.user)
         # Возвращаем пустой queryset для неаутентифицированных пользователей
         return Supply.objects.none()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        current_user = self.request.user
+        context['product_accept_count'] = Supply.objects.filter(owner=current_user,).count()
+        return context
 
 
 class SupplyCreateView(CreateView, LoginRequiredMixin):
@@ -94,37 +111,33 @@ class SupplyUpdateView(UpdateView):
 class SupplyDetailView(DetailView):
     model = Supply
 
-    def product_accept_view(request):
+    def supplys_view(request):
         supplys = Supply.objects.all()
         context = {'supplys': supplys}
         return render(request, 'supply_detail.html', context)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Получаем объекты Product через ProductAccept
+        context['products'] = Product.objects.filter(product_supply__supply=self.object)
+        return context
 
-# class ProductAcceptListView(ListView):
-#     model = ProductAccept
-#
-#     def product_accept_view(request):
-#         supplys = Supply.objects.all()
-#         context = {'supplys': supplys}
-#         return render(request, 'supply_detail.html', context)
 
-    # success_url = reverse_lazy('messaging:client_list')
-    #
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     client_item = self.get_object()
-    #     context['title'] = client_item.first_name
-    #     return context
+class ProductAcceptCreateView(CreateView, LoginRequiredMixin):
+    model = ProductAccept
+    form_class = ProductAcceptForm
+    success_url = reverse_lazy('cabinet:product_accept_create')
 
-# class ProductAcceptCreateView(CreateView, LoginRequiredMixin):
-#     model = ProductAccept
-#     form_class = ProductAcceptForm
-#     success_url = reverse_lazy('cabinet:supply_create')
-#
-#     def form_valid(self, form):
-#         product = form.save()
-#         user = self.request.user
-#         product.owner = user
-#         product.save()
-#
-#         return super().form_valid(form)
+    def form_valid(self, form):
+        product = form.save()
+        user = self.request.user
+        product.owner = user
+        product.save()
+
+        return super().form_valid(form)
+
+
+class ProductAcceptUpdateView(UpdateView):
+    model = ProductAccept
+    form_class = ProductAcceptForm
+    success_url = reverse_lazy('cabinet:product_accept_create')

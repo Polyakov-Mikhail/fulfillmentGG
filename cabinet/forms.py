@@ -1,6 +1,6 @@
 from django.forms import ModelForm
 
-from cabinet.models import Product, Supply
+from cabinet.models import Product, Supply, ProductAccept
 
 
 class ProductForm(ModelForm):
@@ -13,3 +13,9 @@ class SupplyForm(ModelForm):
     class Meta:
         model = Supply
         exclude = ("owner", "status",)
+
+
+class ProductAcceptForm(ModelForm):
+    class Meta:
+        model = ProductAccept
+        exclude = ("owner",)

@@ -19,8 +19,8 @@
                 <th>#</th>
                 <th>Количество уникальных товаров</th>
                 <th>Общий остаток товара</th>
-                <th>Новых заявок на поставку</th>
-                <th>Новых заявок на отгрузку</th>
+                <th>Заявок на поставку</th>
+                <th>Заявок на отгрузку</th>
             </tr>
             </thead>
             <tbody>
@@ -28,7 +28,7 @@
                 <td></td>
                 <td><a href="{% url 'cabinet:product' %}">{{ product_count }}</a></td>
                 <td><a href="{% url 'cabinet:product' %}">{{ product_total_quantity }}</a></td>
-                <td>0</td>
+                <td><a href="{% url 'cabinet:supply' %}">{{ supply_total_quantity }}</a></td>
                 <td>0</td>
             </tr>
             </tbody>
