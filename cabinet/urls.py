@@ -1,4 +1,5 @@
 from django.urls import path
+from django.views.decorators.cache import cache_page
 
 from cabinet.apps import CabinetConfig
 from cabinet.views import ProductListView, ProductCreateView, ProductDeleteView, ProductUpdateView, DashboardListView, \
@@ -34,6 +35,6 @@ urlpatterns = [
     path('product_shipment/<int:pk>/', ProductShipmentUpdateView.as_view(), name='product_shipment_update'),
     path('product_shipment/delete/<int:pk>/', ProductShipmentDeleteView.as_view(), name='product_shipment_delete'),
 
-    path("company/", CompanyListView.as_view(), name="company"),
+    path("company/", cache_page(600)(CompanyListView.as_view()), name="company"),
 
 ]
