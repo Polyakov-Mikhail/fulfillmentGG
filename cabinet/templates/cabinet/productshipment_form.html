@@ -8,12 +8,12 @@
     font-size: 400%;
 }
     </style>
-    <p class="center_big">Поступление товара</p>
+    <p class="center_big">Отгрузка товара</p>
     <div class="table-responsive">
         {% if object %}
-        <h1 class="fw-light">Изменение поступаемого товара</h1>
+        <h1 class="fw-light">Изменение отгружаемого товара</h1>
         {% else %}
-        <h1 class="fw-light">Добавления поступаемого товара</h1>
+        <h1 class="fw-light">Добавления отгружаемого товара</h1>
         {% endif %}
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
@@ -25,7 +25,7 @@
                 Создать
                 {% endif %}
             </button>
-            <a href="{% url 'cabinet:supply' %}" type="submit" class="btn btn-danger">
+            <a href="{% url 'cabinet:shipment' %}" type="submit" class="btn btn-danger">
                 Назад
             </a>
             {% if messages %}

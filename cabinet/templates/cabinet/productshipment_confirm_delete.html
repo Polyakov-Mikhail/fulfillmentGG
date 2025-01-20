@@ -1,0 +1,22 @@
+{% extends 'cabinet/base.html' %}
+{% block content %}
+<main class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+    <style>
+        .center_big {
+  text-align: center;
+      font-family: 'Times New Roman', Times, serif;
+    font-size: 400%;
+}
+    </style>
+    <p class="center_big">Отгрузка товара</p>
+    <div class="table-responsive">
+        <h1 class="fw-light">Удаление товара {{object.name}}</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="btn btn-danger" type="submit">Удалить</button>
+        </form>
+    </div>
+</main>
+
+{% endblock %}

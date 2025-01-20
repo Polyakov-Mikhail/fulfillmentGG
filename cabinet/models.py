@@ -11,7 +11,6 @@ class Product(models.Model):
         max_length=100,
         verbose_name="Наименование",
         help_text="Введите наименование товара",
-        unique=True
     )
     article = models.CharField(
         max_length=20,
@@ -28,7 +27,7 @@ class Product(models.Model):
     quantity = models.PositiveIntegerField(
         verbose_name="количество товара",
         default=0,
-        # editable=False,
+        editable=False,
     )
     image = models.ImageField(
         upload_to="product/image",
@@ -57,11 +56,15 @@ class Product(models.Model):
         verbose_name="Дата создания(записи в БД)",
         **NULLABLE,
         help_text="Укажите дату создания",
+        auto_now_add=True,
+        editable=False
     )
     updated_at = models.DateField(
         verbose_name="Дата последнего изменения(записи в БД)",
         **NULLABLE,
         help_text="Укажите дату изменения",
+        auto_now=True,
+        editable=False
     )
 
     class Meta:
@@ -306,3 +309,41 @@ class ProductShipment(models.Model):
 
     def __str__(self):
         return f'{self.product} владелец {self.owner}'
+
+
+class Company(models.Model):
+    name = models.CharField(
+        max_length=100,
+        verbose_name="Наименование компании",
+        help_text="Введите наименование компании",
+    )
+    inn = models.TextField(
+        verbose_name="ИНН компании",
+        help_text="Укажите ИНН компании",
+    )
+    current_account = models.TextField(
+        verbose_name="Расчетный счет компании",
+        help_text="Укажите расчетный счет компании",
+    )
+    bic = models.IntegerField(
+        verbose_name="БИК банка",
+        help_text="Укажите БИК банка",
+    )
+    legal_address = models.TextField(
+        verbose_name="Юридическая адрес",
+        help_text="Введите юр. адрес",
+    )
+    owner = models.ForeignKey(
+        User,
+        **NULLABLE,
+        verbose_name="Владелец",
+        help_text="Укажите к какому кабинету привязана компания",
+        on_delete=models.SET_NULL
+    )
+
+    class Meta:
+        verbose_name = "Компания"
+        verbose_name_plural = "Компании"
+
+    def __str__(self):
+        return f'{self.name}, ИНН {self.inn}'

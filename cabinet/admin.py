@@ -1,5 +1,6 @@
 from django.contrib import admin
-from cabinet.models import Product, Dashboard, Supply, ProductAccept, Marketplace, DeliveryPoint, Shipment, ProductShipment
+from cabinet.models import Product, Dashboard, Supply, ProductAccept, Marketplace, DeliveryPoint, Shipment, \
+    ProductShipment, Company
 
 
 @admin.register(Product)
@@ -47,3 +48,9 @@ class ShipmentAdmin(admin.ModelAdmin):
 class ProductShipmentAdmin(admin.ModelAdmin):
     exclude = ('id', )
     list_display = ('owner', 'product', 'quantity', 'shipment')
+
+
+@admin.register(Company)
+class CompanyAdmin(admin.ModelAdmin):
+    exclude = ('id', )
+    list_display = ('name', 'inn', 'owner',)

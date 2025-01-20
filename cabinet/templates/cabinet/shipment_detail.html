@@ -10,9 +10,9 @@
     font-size: 400%;
 }
     </style>
-    <p class="center_big">Состав поставки от {{object.delivery_date}}</p>
+    <p class="center_big">Состав отгрзки от {{object.shipment_date}} в {{object.delivery_point}}</p>
     <div class="table-responsive">
-        <a href="{% url 'cabinet:product_accept_create' %}" class="btn btn-primary my-2">Добавить товар в поставку</a>
+        <a href="{% url 'cabinet:product_shipment_create' %}" class="btn btn-primary my-2">Добавить товар в отгрузку</a>
         <table class="table table-striped table-sm">
             <thead>
             <tr>
@@ -20,18 +20,18 @@
                 <th>Название</th>
                 <th>количество</th>
                 <th>изменить товар</th>
-                <th>убрать из поставки</th>
+                <th>убрать из отгрузки</th>
             </tr>
             </thead>
             <tbody>
-            {% for product in object.supply.all %}
+            {% for product in object.shipment.all %}
             <tr>
                 <td>{{ forloop.counter }}</td>
                 <td>{{product}}</td>
                 <td>{{product.quantity}}</td>
-                <td><a class="btn btn-success" href="{% url 'cabinet:product_accept_update' product.pk %}"
+                <td><a class="btn btn-success" href="{% url 'cabinet:product_shipment_update' product.pk %}"
                        role="button">Изменить</a></td>
-                <td><a class="btn btn-danger" href="{% url 'cabinet:product_accept_delete' product.pk %}"
+                <td><a class="btn btn-danger" href="{% url 'cabinet:product_shipment_delete' product.pk %}"
                        role="button">Удалить</a></td>
             </tr>
             {% endfor %}

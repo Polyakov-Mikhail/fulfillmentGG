@@ -1,0 +1,44 @@
+{% extends 'cabinet/base.html' %}
+{% load static %}
+{% load my_tags %}
+
+{% block content %}
+<main class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+    <style>
+        .center_big {
+  text-align: center;
+      font-family: 'Times New Roman', Times, serif;
+    font-size: 400%;
+}
+    </style>
+    <p class="center_big">Компания</p>
+    <div class="table-responsive">
+        <table class="table table-striped table-sm">
+            <thead>
+            <tr>
+                <th></th>
+                <th>Название компании</th>
+                <th>ИНН</th>
+                <th>Расчетный счет компании</th>
+                <th>БИК банка</th>
+                <th>Юридическая адрес</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for object in object_list %}
+            <tr>
+                <td></td>
+                <td>{{ object.name }}</td>
+                <td>{{ object.inn }}</td>
+                <td>{{ object.current_account }}</td>
+                <td>{{ object.bic }}</td>
+                <td>{{ object.legal_address }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+</main>
+{% endblock %}

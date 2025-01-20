@@ -23,6 +23,8 @@
                 <th>Артикул</th>
                 <th>Штрихкод</th>
                 <th>Остаток</th>
+                <th>Дата создания</th>
+                <th>Дата последнего изменения</th>
                 <th>Редактировать</th>
                 <th>Удалить</th>
             </tr>
@@ -39,6 +41,8 @@
                 <td>{{ product.article }}</td>
                 <td>{{ product.barcode }}</td>
                 <td>{{ product.quantity }}</td>
+                <td>{{ product.created_at }}</td>
+                <td>{{ product.updated_at }}</td>
                 <td><a class="btn btn-info" href="{% url 'cabinet:product_update' product.pk %}"
                                    role="button">Редактировать</a></td>
                 {% if product.quantity %}
