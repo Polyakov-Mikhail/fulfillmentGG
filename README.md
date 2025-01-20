@@ -59,3 +59,31 @@
 6. **Качество кода**: 
    - Соблюдать стандарты PEP8.
    - Весь код должен храниться в удаленном Git репозитории.
+
+## Использование
+
+Для использования программы необходимо установить `poetry` и выполнить следующие шаги:
+
+1. Клонирование репозитория
+```bash
+git@github.com:Polyakov-Mikhail/fulfillmentGG.git
+или
+https://github.com/Polyakov-Mikhail/fulfillmentGG.git
+```
+2. Установление зависимостей
+```bash
+poetry shell
+poetry install
+```
+3. Создание файла .env: 
+```text
+Вставить свои значения в переменные из файла .env.sample
+```
+4. Установка базы данных
+```text
+python3 manage.py loaddata data.json
+```
+5. Запуск проекта
+```text
+python3 manage.py runserver
+```
